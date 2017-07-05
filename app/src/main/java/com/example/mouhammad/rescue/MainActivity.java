@@ -1,6 +1,7 @@
 package com.example.mouhammad.rescue;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -18,10 +19,12 @@ import com.google.android.gms.location.LocationServices;
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static final int PERMISSION_ACCESS_COARSE_LOCATION = 1;
     private GoogleApiClient googleApiClient;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context = this;
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.ACCESS_COARSE_LOCATION },
@@ -66,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
 
             double lat = lastLocation.getLatitude(), lon = lastLocation.getLongitude();
+            Toast.makeText(context, String.valueOf(lat + " , " + lon), Toast.LENGTH_LONG);
 
         }
     }
